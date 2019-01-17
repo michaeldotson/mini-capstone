@@ -13,4 +13,9 @@ class Api::ProductsController < ApplicationController
     @liquidass = Product.find_by(name: "Liquid Ass")
     render 'liquidass.json.jbuilder'
   end
+
+  def all_products
+    @all_products = Product.all
+    render 'all_products.json.jbuilder'
+  end
 end

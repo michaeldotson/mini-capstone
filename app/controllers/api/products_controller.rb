@@ -1,21 +1,42 @@
 class Api::ProductsController < ApplicationController
-  def beach_towel
-    @beachtowel = Product.find_by(name: "Beach Towel")
-    render 'beachtowel.json.jbuilder'
+
+  def index
+    @products = Product.all
+    render 'index.json.jbuilder'
   end
 
-  def mens_shaver
-    @mens_shaver = Product.find_by(name: "Men's Shaver")
-    render 'mensshaver.json.jbuilder'
+  def show
+    @product = Product.find_by(id: params["id"])
+    render 'show.json.jbuilder'
   end
 
-  def liquidass
-    @liquidass = Product.find_by(name: "Liquid Ass")
-    render 'liquidass.json.jbuilder'
+  def create
+    @product = Product.new(
+    name: params["title"],
+    price: params["price"],
+    description: params["description"],
+    image_url: params["image_url"]
+    )
+    
+    @product.save
+    render 'show.json.jbuilder'
   end
 
-  def all_products
-    @all_products = Product.all
-    render 'all_products.json.jbuilder'
+  def update
+    @product = Product.find(params[:id])
+    @product.name = params["name"] || @product.name
+    @product.price = params["price"] || @product.price
+    @product.image_url = params["image_url"] || @product.image_url
+    @product.description = params["description"] || @product.description
+    
+    @product.save
+    render 'show.json.jbuilder'
   end
+
+  def destroy
+    @product = Product.find_by(id: params["id"])
+    @product.destroy
+    render json: {message: "Product successfully destroyed"}
+  end
+
 end

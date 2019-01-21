@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   namespace :api do
-  get "beachtowel" => "products#beach_towel"
-  get "mensshaver" => "products#mens_shaver"
-  get "liquidass" => "products#liquidass"
-  get "all_products" => "products#all_products"
+
+  get "/products" => "products#index"
+  get "/products/:id" => "products#show"
+  post "products" => "products#create"
+  patch "products/:id" => "products#update"
+  delete "products/:id" => "products#destroy"
   end
 end

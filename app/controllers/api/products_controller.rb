@@ -12,7 +12,7 @@ class Api::ProductsController < ApplicationController
 
   def create
     @product = Product.new(
-    name: params["title"],
+    name: params["name"],
     price: params["price"],
     description: params["description"],
     image_url: params["image_url"]

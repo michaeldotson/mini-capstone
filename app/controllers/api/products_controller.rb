@@ -37,7 +37,7 @@ class Api::ProductsController < ApplicationController
     name: params[:name],
     price: params[:price],
     description: params[:description],
-    product_id: params[:product_id]
+    product_id: current_user.id
     )
     
     if @product.save
@@ -53,9 +53,8 @@ class Api::ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @product.name = params[:name] || @product.name
     @product.price = params[:price] || @product.price
-    
     @product.description = params[:description] || @product.description
-    @product.product_id = params[:product_id] || @product.product_id
+    
     
     if @product.save
       #happy path
@@ -190,7 +189,5 @@ def index_image
     @image.destroy
     render json: {message: "Image successfully destroyed"}
   end
-
-  
 
 end

@@ -7,6 +7,7 @@ class Api::ProductsController < ApplicationController
       if search_term
         @products = Product.where("name ILIKE ?", "%#{search_term}%")
       end
+      
       discount = params[:discount]
       if discount 
         @products = Product.where("price < ?", 50)

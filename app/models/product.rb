@@ -4,9 +4,12 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   validates :description, length: { in: 20..500 }
 
+  has_many :category_products
+  has_many :categories, through: :category_products
   belongs_to :supplier
   has_many :images
   has_many :orders
+
 
   def is_discounted?
     price <= 10 
@@ -20,5 +23,8 @@ class Product < ApplicationRecord
     price + tax     
    end 
 
+  def category_names
+    categories.map {|category| category.name}
+  end
 
 end

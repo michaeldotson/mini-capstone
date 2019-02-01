@@ -23,8 +23,9 @@ Rails.application.routes.draw do
   post "/sessions" => "sessions#create"
 
   get "/orders" => "orders#index"
-  get "/orders" => "orders#show"
+  get "/orders/:id" => "orders#show"
   post "/orders" => "orders#create"
+  patch "/orders/:id" => "orders#update"
 
 
   end

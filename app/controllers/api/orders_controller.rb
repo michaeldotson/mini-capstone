@@ -1,6 +1,6 @@
 class Api::OrdersController < ApplicationController
 
-  before_action :authenticate_user, except: [:index, :show]
+  before_action :authenticate_user
 
   def index
     @orders = Order.all.order(:id)
@@ -8,46 +8,24 @@ class Api::OrdersController < ApplicationController
   end
 
   def create
-    product = Product.find_by(id: params[:product_id])
-    subtotal = product.price * params[:quantity].to_i
-    tax = subtotal * 0.09
-    total = subtotal + tax
+    carted_products = current_user.carted_products.where(status: "carted")
 
-    product = Product.find(params[:product_id])
-     @order = Order.new(
-       user_id: current_user.id,
-       product_id: params[:product_id],
-       quantity: params[:quantity],
-       subtotal: subtotal,
-       tax: tax,
-       total: total
-       )
+    @order = Order.new(
+       user_id: current_user.id
+    )
 
-    @order.save
+    if @order.save
+      carted_products.update_all(status: "purchased", order_id: @order.id)
+      @order.update_totals
       render 'show.json.jbuilder'
-    
+    else
+      render json: {errors: @order.errors.full_messages}, status: 422
+    end
   end
 
   def show
-    @order = Order.find(params[:id])
+    @order = Order.find_by(params[:id])
     render 'show.json.jbuilder' 
   end
-
-  def update
-    @order = Order.find(params[:id])
-    @order.quantity = params[:quantity] || @order.quantity
-    @order.subtotal = params[:subtotal] || @order.subtotal
-    @order.tax = params[:tax] || @order.tax
-    
-    
-    if @order.save
-      #happy path
-      render 'show.json.jbuilder'
-    else
-      #sad path
-      render json: {errors: @order.errors.full_messages}, status: :unprocessable_entity
-    end 
-  end
-
 end
 

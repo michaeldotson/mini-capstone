@@ -3,7 +3,7 @@ class Api::ProductsController < ApplicationController
 before_action :authenticate_admin, except: [:index, :show]
 
   def index
-      @products = Product.all.order(:id)
+      @products = Product.all
 
       search_term = params[:search]
       if search_term
@@ -12,12 +12,12 @@ before_action :authenticate_admin, except: [:index, :show]
       
       discount = params[:discount]
       if discount 
-        @products = Product.where("price < ?", 50)
+        @products = Product.where("price < ?", 10)
       end
-
 
       sort_term = params[:sort]
       sort_order = params[:sort_order]
+
       if sort_term == "price"
         if sort_order == "desc"
           @products = @products.order(price: :desc)
@@ -46,8 +46,8 @@ before_action :authenticate_admin, except: [:index, :show]
     @product = Product.new(
     name: params[:name],
     price: params[:price],
-    description: params[:description],
-    supplier_id: params[:supplier_id]
+    description: params[:description]
+    # supplier_id: params[:supplier_id]
     )
     
     if @product.save

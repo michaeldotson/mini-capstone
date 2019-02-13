@@ -25,8 +25,19 @@ Rails.application.routes.draw do
   get "/orders" => "orders#index"
   get "/orders/:id" => "orders#show"
   post "/orders" => "orders#create"
-  patch "/orders/:id" => "orders#update"
+  
 
-
+  post "/carted_products" => "carted_products#create"
+  get "/carted_products" => "carted_products#index"
+  delete "/carted_products/:id" => "carted_products#destroy"
   end
+
+  get "/products" => "products#index"
+  get "/products/new" => "products#new" #new has to be before show route
+  get "/products/:id" => "products#show"
+  post "/products" => "products#create"
+  get "/products/:id/edit" => "products#edit"
+  patch "/products/:id" => "products#update" 
+  delete "/products/:id" => "products#destroy"
+
 end

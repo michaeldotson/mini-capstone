@@ -1,0 +1,29 @@
+<h1 align="center">Create New Product</h1>
+<form action="/api/products" method="post" align="center" >
+  <div>
+    Name: <input type="text" name="name">
+  </div>
+  <div>
+    Price: <input type="text" name="price">
+  </div>
+  <div>
+    Description: <input type="text" name="description">
+  </div>
+
+  <div>
+    Description: <input type="text" name="description">
+  </div>
+
+  Choose a supplier: 
+  <select name="supplier_id">  
+    <% @suppliers.each do |supplier| %>
+      <option value="<%= supplier.id %>"><%= supplier.name%></option>
+      <% end %>
+  </select>
+
+  <br>
+
+  <input type="submit" value="Create Product">
+
+  <a href="/products">Cancel</a>
+</form>

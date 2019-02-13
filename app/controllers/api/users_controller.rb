@@ -17,6 +17,5 @@ class Api::UsersController < ApplicationController
   def show
     @user = User.find_by(:id)
     render 'show.json.jbuilder'
-    
   end
 end

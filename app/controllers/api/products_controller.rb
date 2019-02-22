@@ -1,6 +1,6 @@
 class Api::ProductsController < ApplicationController
 
-before_action :authenticate_admin, except: [:index, :show]
+# before_action :authenticate_admin, except: [:index, :show]
 
   def index
       @products = Product.all
@@ -35,7 +35,7 @@ before_action :authenticate_admin, except: [:index, :show]
       end
 
       render 'index.json.jbuilder'
-    end
+  end
 
   def show
     @product = Product.find(params[:id])
@@ -46,11 +46,17 @@ before_action :authenticate_admin, except: [:index, :show]
     @product = Product.new(
     name: params[:name],
     price: params[:price],
-    description: params[:description]
-    # supplier_id: params[:supplier_id]
+    description: params[:description],
+    supplier_id: params[:supplier_id]
     )
     
     if @product.save
+      image = Image.new(
+        url: params[:image_url],
+        product_id: @product.id
+      )
+      image.save
+
       #happy path
       render 'show.json.jbuilder'
     else

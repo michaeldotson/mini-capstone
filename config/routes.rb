@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   patch "/images/:id" => "products#update_image"
   delete "/images/:id" => "products#destroy_image"
 
+  get "/users" => "users#index"
   post "/users" => "users#create"
   post "/sessions" => "sessions#create"
 

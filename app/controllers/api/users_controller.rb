@@ -3,6 +3,12 @@ class Api::UsersController < ApplicationController
     @users = User.all
     render 'index.json.jbuilder'
   end
+
+  def show
+    @user = User.find(params[:id])
+    render 'show.json.jbuilder'
+  end
+
   def create
     @user = User.new(
       name: params[:name],
@@ -10,7 +16,6 @@ class Api::UsersController < ApplicationController
       password: params[:password],
       password_confirmation: params[:password_confirmation],
       avatar: params[:avatar]
-
     )
 
     if @user.save
@@ -18,10 +23,5 @@ class Api::UsersController < ApplicationController
     else
       render json: {errors: @user.errors.full_messages}, status: :bad_request
     end
-  end
-
-  def show
-    @user = User.find_by(:id)
-    render 'show.json.jbuilder'
   end
 end

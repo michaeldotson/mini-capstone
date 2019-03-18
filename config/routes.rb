@@ -7,20 +7,22 @@ Rails.application.routes.draw do
   patch "products/:id" => "products#update"
   delete "products/:id" => "products#destroy"
 
-  get "/suppliers" => "products#index_supplier"
-  get "/suppliers/:id" => "products#show_supplier"
-  post "/suppliers" => "products#create_supplier"
-  patch "/suppliers/:id" => "products#update_supplier"
-  delete "/suppliers/:id" => "products#destroy_supplier"
+  get "/suppliers" => "products#index"
+  get "/suppliers/:id" => "products#show"
+  post "/suppliers" => "products#create"
+  patch "/suppliers/:id" => "products#update"
+  delete "/suppliers/:id" => "products#destroy"
 
-  get "/images" => "products#index_image"
-  get "/images/:id" => "products#show_image"
-  post "/images" => "products#create_image"
-  patch "/images/:id" => "products#update_image"
-  delete "/images/:id" => "products#destroy_image"
+  get "/images" => "products#index"
+  get "/images/:id" => "products#show"
+  post "/images" => "products#create"
+  patch "/images/:id" => "products#update"
+  delete "/images/:id" => "products#destroy"
 
   get "/users" => "users#index"
+  get "/users/:id" => "users#show"
   post "/users" => "users#create"
+  
   post "/sessions" => "sessions#create"
 
   get "/orders" => "orders#index"
